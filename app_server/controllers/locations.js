@@ -1,5 +1,5 @@
 module.exports.homeList = function(req, res){
-	var wifiLocations = [{
+	/*var wifiLocations = [{
 		name: "Starcup",
 		stars: 3,
 		proximity: "100m",
@@ -12,12 +12,12 @@ module.exports.homeList = function(req, res){
 		proximity: "10m",
 		address: "1 Main St, Dublin",
 		facilities: ["Free Coffee", "Free Food", "Free Alcohol", "Free WiFi"]
-	}];
+	}];*/
 	res.render('locations-list', { title: 'Home', wifiLocations });
 };
 
 module.exports.locationInfo = function(req, res){
-	var location = {
+	/*var location = {
 		name: "Insomnia",
 		stars: 5,
 		proximity: "10m",
@@ -38,7 +38,7 @@ module.exports.locationInfo = function(req, res){
 				stars: 3, 
 				comment: "It was okay. Coffee wasn't great, but the wifi was fast."
 			}]	
-	};
+	};*/
 	res.render('location-info', { title: 'Location Info', location });
 };
 
