@@ -1,0 +1,37 @@
+mixin starRating(stars)
+  span.rating
+  - for(var i = 1; i <= 5; i++)
+    if i <= stars
+      span.glyphicon.glyphicon-star
+    else
+      span.glyphicon.glyphicon-star-empty
+
+mixin review(review)
+  div.row
+    div.review
+      div.well.well-sm.review-header
+        +starRating(review.stars)
+        span.reviewAuthor=review.reviewer
+        small.reviewTimestamp=review.date
+      div.col-xs-12
+        p=review.comment
+
+mixin facility(facility)
+  span.label.label-warning
+    span.glyphicon.glyphicon-ok
+    |&nbsp;
+    =facility
+  |&nbsp;
+
+mixin location(location)
+  div.col-xs-12.list-group-item
+    h4
+      a(href="/location")=location.name
+      small &nbsp;
+        +starRating(location.stars)
+      span.badge.pull-right.badge-default=location.proximity
+    p.address=location.address
+    p
+      each facility in location.facilities
+        +facility(facility)
+        | &nbsp;
