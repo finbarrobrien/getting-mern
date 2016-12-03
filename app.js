@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 require('./rest_api/models/db');
 
 var routes = require('./app_server/routes/index');
-var routesApi = require('./rest_api/routes/index');
+var routesApi = require('./rest_api/routes/locations');
 
 var app = express();
 
