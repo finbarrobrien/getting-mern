@@ -66,7 +66,7 @@ var locationSchema = new mongoose.Schema({
 	reviews : [ reviewSchema ]
 });
 
-mongoose.model('Location', locationSchema);
+mongoose.model('location', locationSchema);
  
 /*var location = {
 		name: "Insomnia",
