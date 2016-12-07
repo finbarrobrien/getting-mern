@@ -4,6 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+var mongoose =  require('mongoose');
+var dbURI = 'mongodb://localhost/Loc8r';
+if(process.env.NODE_ENV === 'production'){
+	dbURI = process.env.MONGODB_URI;
+}
+// Globally accessible MongoDB connection called 'mongoDBConn'
+global.mongoDbConn = (global.mongoDbConn ? global.mongoDbConn : mongoose.createConnection(dbURI));
+
 require('./rest_api/models/db');
 
 var routes = require('./app_server/routes/index');

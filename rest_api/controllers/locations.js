@@ -2,8 +2,8 @@
  * Controller for the locations REST API endpoints
  */
 
-var mongoose = require('mongoose');
-var Loc = mongoose.model('location');
+//var mongoose = require('mongoose');
+var Loc = mongoDbConn.model('Location');
 
 var sendJsonResponse = function(res, status, content){
 	res.status(status);
@@ -19,7 +19,10 @@ module.exports.locationsListByDistance = function(req, res){
 };
 
 module.exports.locationsReadOne = function(req, res){
-	sendJsonResponse(res, 200, {"status" : "success"})
+	console.log("hello");
+	Loc.findById(req.params.locationId).exec(function(err,location){
+		sendJsonResponse(res, 200, location);
+	});
 };
 
 module.exports.locationsUpdateOne = function(req, res){

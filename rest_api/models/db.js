@@ -1,32 +1,26 @@
-var mongoose =  require('mongoose');
-var dbURI = 'mongodb://localhost/Loc8r';
-if(process.env.NODE_ENV === 'production'){
-	dbURI = process.env.MONGODB_URI;
-}
-var loc8rConn = mongoose.createConnection(dbURI);
+require('mongoose');
 require('./location');
 
-
 var connectLog = function(){
-	console.log('Mongoose connected to '+dbURI)
+	console.log('Mongoose new connection to '+mongoDbConn.host+":"+mongoDbConn.port+"/"+mongoDbConn.name);
 };
 
 var errorLog = function(err){
-	console.log('Mongoose connection error '+ err)
+	console.log('Mongoose connection error '+ err);
 };
 
 var disconnectLog = function(){
-	console.log('Mongoose disconnected from '+dbURI)
+	console.log('Mongoose disconnected from '+mongoDbConn.host+":"+mongoDbConn.port);
 };
 
-loc8rConn.on( 'connected', connectLog);
+mongoDbConn.on( 'connected', connectLog);
 
-loc8rConn.on( 'error', errorLog);
+mongoDbConn.on( 'error', errorLog);
 
-loc8rConn.on( 'disconnected', disconnectLog);
+mongoDbConn.on( 'disconnected', disconnectLog);
 
 var gracefulShutdown = function(msg, callback){
-	mongoose.connection.close(function(){
+	mongoDbConn.close(function(){
 		console.log('Mongoose disconnected through ' + msg);
 		callback();
 	});
