@@ -5,9 +5,69 @@ var sendJsonResponse = function(res, status, content){
 	res.json(content);
 };
 
+var setAverageStars = function(location){
+	if(location.reviews && location.reviews.length > 0){
+		var total;
+		for(var i = 0; i < location.reviews.length; i++){
+			total = total + location.reviews[i].stars;
+		}
+		location.stars = parseInt(total / location.reviews.length, 10); // parse average as a decimal number (base 10)
+		location.save(function(err){
+			if(err){
+				console.log(err);
+			}else{
+				console.log("Average rating updated to ", location.stars)
+			}
+		})
+	}
+};
+
+var updateAverageStars = function(locationId){
+	Loc.findById(locationId).select("rating reviews").exec(function(err, location){
+		if(err){
+			console.log("Error updating the average Stars");
+		}else{
+			setAverageStars(location);
+		}
+	});
+};
+
+var doAddReview = function(req, res, location){
+	if(!location){
+		sendJsonResponse(res, 404, {"message":"location is missing"})
+	}else{
+		location.reviews.push({
+			reviewer: req.body.reviewer,
+			stars: req.body.stars,
+			comment: req.body.comment
+		});
+		location.save(function(err, location){
+			if(err){
+				sendJsonResponse(res, 400, err);
+			}else{
+				updateAverageStars(location._id);
+				sendJsonResponse(res, 201, location.reviews[location.reviews.length-1]);
+			}
+		});
+	}
+};
 
 module.exports.reviewsCreate = function(req, res){
-	sendJsonResponse(res, 200, {"status" : "success"})
+	if(req.params.locationId){
+		Loc.findById(req.params.locationId).select("reviews").exec(function(err,location){
+			if(!location){
+				sendJsonResponse(res, 404, {"message":"locationId not found"})
+			} else {
+				if(err){
+					sendJsonResponse(res, 400, err)
+				}else{
+					doAddReview(req, res, location);
+				}
+			}
+		});
+	}else{
+		sendJsonResponse(res, 400, { "message" : "locationId is required"})
+	}
 };
 
 module.exports.reviewsUpdateOne = function(req, res){
@@ -24,6 +84,7 @@ module.exports.reviewsReadOne = function(req, res){
 			}else{
 				if(err){
 					// Could do further analysis of the error to determine the real problem
+					console.log(err);
 					sendJsonResponse(res, 500, err);
 					return;
 				}else{

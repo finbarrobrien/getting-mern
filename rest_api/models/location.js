@@ -57,7 +57,8 @@ var locationSchema = new mongoose.Schema({
 	},
 	latLng : {
 		type : [ Number ],
-		index : '2dsphere'
+		index : '2dsphere',
+		required: true
 	},
 	openingTimes : [ openingTimeSchema ],
 	facilities : [ {
