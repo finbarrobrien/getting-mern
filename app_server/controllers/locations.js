@@ -1,11 +1,13 @@
-module.exports.homeList = function(req, res){
-	res.render('locations-list', { title: 'Home', wifiLocations });
+const homeList = function (req, res) {
+  res.render('locations-list', { title: 'Home', wifiLocations });
 };
 
-module.exports.locationInfo = function(req, res){
-	res.render('location-info', { title: 'Location Info', location });
+const locationInfo = function (req, res) {
+  res.render('location-info', { title: 'Location Info', location });
 };
 
-module.exports.addReview = function(req, res){
-	res.render('location-review-form', { title: 'Add a Review' });
+const addReview = function (req, res) {
+  res.render('location-review-form', { title: 'Add a Review' });
 };
+
+export { homeList, locationInfo, addReview };
