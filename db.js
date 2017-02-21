@@ -3,6 +3,8 @@
  */
 import mongoose from 'mongoose';
 
+import LocationSchema from './rest_api/models/LocationSchema';
+
 let dbURI = 'mongodb://localhost/Loc8r';
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGODB_URI;
@@ -54,5 +56,7 @@ mongoDbConn.on('connected', connectLog);
 mongoDbConn.on('error', errorLog);
 
 mongoDbConn.on('disconnected', disconnectLog);
+
+mongoose.model('Location', LocationSchema);
 
 export default mongoDbConn;

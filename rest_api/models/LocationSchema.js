@@ -66,5 +66,4 @@ const LocationSchema = new mongoose.Schema({
   reviews: [reviewSchema],
 });
 
-mongoose.model('Location', LocationSchema);
-
+export default LocationSchema;
