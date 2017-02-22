@@ -2,6 +2,7 @@
  * Controller for the locations REST API endpoints
  */
 import mongoDbConn from '../../db';
+import randomData from '../../test/data/dataGenerator';
 
 // Access the global mongoDbConn
 const Loc = mongoDbConn.model('Location');
@@ -23,8 +24,21 @@ const sendJsonResponse = (res, status, content) => {
   res.json(content);
 };
 
+const createLocation = (location, callback) => {
+  Loc.create(location, (err, loc) => {
+    if (callback) {
+      callback(err, loc);
+    } else {
+      if (err) {
+        console.log(err);
+      }
+      console.log(`created location: ${location.name}`);
+    }
+  });
+};
+
 const locationsCreate = (req, res) => {
-  Loc.create({
+  createLocation({
     name: req.body.name,
     address: req.body.address,
     facilities: req.body.facilities.split(','),
@@ -151,5 +165,13 @@ const locationsDeleteOne = (req, res) => {
   }
 };
 
+const locationsRandomData = (req, res) => {
+  const data = randomData();
+  data.forEach((current) => {
+    createLocation(current);
+  });
+  sendJsonResponse(res, 200, data);
+};
+
 export { locationsCreate, locationsDeleteOne,
-  locationsUpdateOne, locationsReadOne, locationsListByDistance };
+  locationsUpdateOne, locationsReadOne, locationsListByDistance, locationsRandomData };
