@@ -7,16 +7,16 @@ const RestRouter = express.Router();
 
 RestRouter.get('/locations', locationsListByDistance);
 RestRouter.post('/locations', locationsCreate);
-RestRouter.get('/locations/random', locationsRandomData);
-RestRouter.get('/locations/:locationId', locationsReadOne);
-RestRouter.put('/locations/:locationId', locationsUpdateOne);
-RestRouter.delete('/locations/:locationId', locationsDeleteOne);
+RestRouter.get('/location/random', locationsRandomData);
+RestRouter.get('/location/:locationId', locationsReadOne);
+RestRouter.put('/location/:locationId', locationsUpdateOne);
+RestRouter.delete('/location/:locationId', locationsDeleteOne);
 
 
-RestRouter.get('/locations/:locationId/reviews/:reviewId', reviewsReadOne);
-RestRouter.post('/locations/:locationId/reviews', reviewsCreate);
-RestRouter.put('/locations/:locationId/reviews/:reviewId', reviewsUpdateOne);
-RestRouter.delete('/locations/:locationId/reviews/:reviewId', reviewsDeleteOne);
+RestRouter.get('/location/:locationId/reviews/:reviewId', reviewsReadOne);
+RestRouter.post('/location/:locationId/reviews', reviewsCreate);
+RestRouter.put('/location/:locationId/reviews/:reviewId', reviewsUpdateOne);
+RestRouter.delete('/location/:locationId/reviews/:reviewId', reviewsDeleteOne);
 
 export default RestRouter;
 

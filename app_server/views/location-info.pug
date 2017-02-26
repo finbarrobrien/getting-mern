@@ -16,7 +16,10 @@ block content
               h2.panel-title Opening hours
             .panel-body
               each openingTime in location.openingTimes
-                p=openingTime
+                if openingTime.closed === true
+                  p=openingTime.days+': Closed'
+                else
+                  p=openingTime.days+': '+openingTime.open+'-'+openingTime.close
           .panel.panel-primary
             .panel-heading
               h2.panel-title Facilities
@@ -28,7 +31,7 @@ block content
             .panel-heading
               h2.panel-title Location map
             .panel-body
-              img.img-responsive.img-rounded(src=location.mapURL)
+              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?key='+mapKey+'&center='+location.latLng[1]+','+location.latLng[0]+'&zoom=14&size=400x350&sensor=false&markers='+location.latLng[1]+','+location.latLng[0]+'&scale=2')
       .row
         .col-xs-12
           .panel.panel-primary.review-panel
@@ -40,6 +43,6 @@ block content
                 +review(review)
     .col-xs-12.col-md-3
       p.lead
-        | Starcups is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.
+        | #{location.name} is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.
       p
         | If you've been and you like it - or if you don't - please leave a review to help other people just like you.

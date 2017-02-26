@@ -44,5 +44,5 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-console.log(app);
-export { app, mongoDbConn };
+const mapKey = process.env.MAP_KEY;
+export { app, mongoDbConn, mapKey };

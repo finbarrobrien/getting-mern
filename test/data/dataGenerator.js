@@ -3,14 +3,13 @@
  */
 import faker from 'faker';
 
-console.log('Faking data');
 const randomData = () => {
   const data = [];
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     data.push({
       name: faker.company.companyName(),
       address: faker.address.streetAddress(),
-      latLng: [Number(faker.address.latitude()), Number(faker.address.longitude())],
+      latLng: [Number(faker.address.longitude()), Number(faker.address.latitude())],
       openingTimes: [{
         days: 'Monday - Friday',
         open: '08:00',
@@ -30,7 +29,7 @@ const randomData = () => {
       facilities: ['coffee', 'wifi'],
       reviews: [],
     });
-    for (let j = 0; j < 100; j += 1) {
+    for (let j = 0; j < 20; j += 1) {
       data[i].reviews.push({
         reviewer: faker.name.findName(),
         stars: faker.random.number() % 5,
