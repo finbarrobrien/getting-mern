@@ -70,10 +70,31 @@ const locationInfo = function (req, res) {
 
 const locationSearch = function (req, res) {
   const mapInit = () => {
-    let map = new google.maps.Map(document.getElementById('map'), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
+    const showPosition = (position) => {
+      console.log(`Geolocation position is: [${position.coords.latitude}, ${position.coords.longitude}]`);
+      const currentLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+      const marker = new google.maps.Marker({
+        position: currentLocation,
+        map: map,
+      });
+      map.setCenter(currentLocation);
+    }
+
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        console.log('Geolocation is available');
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        console.log('Geolocation is not available');
+      }
+    }
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom : 8,
+      center : { lat: -25.363, lng: 131.044 },
     });
+
+    getLocation();
   };
 
   res.render('location-search', { title: 'Loc8r search', mapInit, mapKey });
