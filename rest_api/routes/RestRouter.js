@@ -1,16 +1,16 @@
 import express from 'express';
-import { locationsListByDistance, locationsCreate, locationsReadOne,
-  locationsUpdateOne, locationsDeleteOne, locationsRandomData } from '../controllers/locations';
+import { locationListByDistance, locationCreate, locationReadOne,
+  locationUpdateOne, locationDeleteOne, locationRandomData } from '../controllers/locations';
 import { reviewsReadOne, reviewsCreate, reviewsUpdateOne, reviewsDeleteOne } from '../controllers/reviews';
 
 const RestRouter = express.Router();
 
-RestRouter.get('/locations', locationsListByDistance);
-RestRouter.post('/locations', locationsCreate);
-RestRouter.get('/location/random', locationsRandomData);
-RestRouter.get('/location/:locationId', locationsReadOne);
-RestRouter.put('/location/:locationId', locationsUpdateOne);
-RestRouter.delete('/location/:locationId', locationsDeleteOne);
+RestRouter.get('/location', locationListByDistance);
+RestRouter.post('/location', locationCreate);
+RestRouter.get('/location/random', locationRandomData);
+RestRouter.get('/location/:locationId', locationReadOne);
+RestRouter.put('/location/:locationId', locationUpdateOne);
+RestRouter.delete('/location/:locationId', locationDeleteOne);
 
 
 RestRouter.get('/location/:locationId/reviews/:reviewId', reviewsReadOne);

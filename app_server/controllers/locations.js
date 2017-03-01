@@ -33,8 +33,8 @@ const _formatDistance = (distance) => {
   return `${parseInt(distance, 10)}m`;
 };
 
-const locationsList = function (req, res) {
-  const path = '/api/locations';
+const locationList = function (req, res) {
+  const path = '/api/location';
   const requestOptions = {
     url: apiOptions.server + path,
     method: 'GET',
@@ -86,4 +86,4 @@ const addReview = function (req, res) {
   res.render('location-review-form', { title: 'Add a Review' });
 };
 
-export { locationsList, locationInfo, addReview };
+export { locationList, locationInfo, addReview };

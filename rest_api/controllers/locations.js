@@ -1,5 +1,5 @@
 /**
- * Controller for the locations REST API endpoints
+ * Controller for the location REST API endpoints
  */
 import { mongoDbConn } from '../../db';
 import randomData from '../../test/data/dataGenerator';
@@ -26,7 +26,7 @@ const _createLocation = (location, callback) => {
   });
 };
 
-const locationsCreate = (req, res) => {
+const locationCreate = (req, res) => {
   _createLocation({
     name: req.body.name,
     address: req.body.address,
@@ -51,7 +51,7 @@ const locationsCreate = (req, res) => {
   });
 };
 
-const locationsListByDistance = (req, res) => {
+const locationListByDistance = (req, res) => {
   const lng = parseFloat(req.query.lng);
   const lat = parseFloat(req.query.lat);
   if ((!lat && lat !== 0) || (!lng && lng !== 0)) {
@@ -87,7 +87,7 @@ const locationsListByDistance = (req, res) => {
   });
 };
 
-const locationsReadOne = (req, res) => {
+const locationReadOne = (req, res) => {
   if (req.params && req.params.locationId) {
     return Loc.findById(req.params.locationId).exec((err, location) => {
       if (!location) {
@@ -102,7 +102,7 @@ const locationsReadOne = (req, res) => {
   return _sendJsonResponse(res, 400, { message: 'missing parameter locationId' });
 };
 
-const locationsUpdateOne = (req, res) => {
+const locationUpdateOne = (req, res) => {
   if (!req.params.locationId) {
     return _sendJsonResponse(res, 404, { message: 'locationId is required' });
   }
@@ -137,7 +137,7 @@ const locationsUpdateOne = (req, res) => {
   });
 };
 
-const locationsDeleteOne = (req, res) => {
+const locationDeleteOne = (req, res) => {
   if (!req.params.locationId) {
     return _sendJsonResponse(res, 404, { message: 'locationId is required' });
   }
@@ -149,7 +149,7 @@ const locationsDeleteOne = (req, res) => {
   });
 };
 
-const locationsRandomData = (req, res) => {
+const locationRandomData = (req, res) => {
   const data = randomData();
   data.forEach((current) => {
     console.log(`Added location ${current.name}`);
@@ -158,5 +158,5 @@ const locationsRandomData = (req, res) => {
   return _sendJsonResponse(res, 200, data);
 };
 
-export { locationsCreate, locationsDeleteOne,
-  locationsUpdateOne, locationsReadOne, locationsListByDistance, locationsRandomData };
+export { locationCreate, locationDeleteOne,
+  locationUpdateOne, locationReadOne, locationListByDistance, locationRandomData };
