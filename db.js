@@ -59,4 +59,4 @@ mongoDbConn.on('disconnected', disconnectLog);
 
 mongoose.model('Location', LocationSchema);
 
-export default mongoDbConn;
+export { mongoDbConn, mongoose };

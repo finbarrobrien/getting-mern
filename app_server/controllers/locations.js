@@ -9,9 +9,9 @@ if (process.env.NODE_ENV === 'production') {
   apiOptions.server = 'http://pure-castle-77017.herokuapp.com';
 }
 
-const renderHomePage = (req, res, wifiLocations) => {
+const _renderHomePAge = (req, res, wifiLocations) => {
   console.log(wifiLocations);
-  if (wifiLocations !== undefined) {
+  if (wifiLocations) {
     res.render('locations-list', {
       title: 'Loc8r - find a place to work with wifi',
       pageHeader: {
@@ -26,27 +26,41 @@ const renderHomePage = (req, res, wifiLocations) => {
   }
 }
 
-const locationsList = function (req, res) {
-  if (req.query.lat && req.query.lng) {
-    const path = '/api/locations';
-    const requestOptions = {
-      url: apiOptions.server + path,
-      method: 'GET',
-      json: {},
-      qs: {
-        lng: req.query.lng,
-        lat: req.query.lat,
-        maxDistance: 1000,
-      },
-    };
-    request(
-      requestOptions, (err, response, body) => {
-        renderHomePage(req, res, body);
-      },
-    );
-  } else {
-    // renderMapPage(req, res, body);
+const _formatDistance = (distance) => {
+  if (distance > 1000) {
+    return `${parseFloat(distance / 1000).toFixed(1)}Km`;
   }
+  return `${parseInt(distance, 10)}m`;
+};
+
+const locationsList = function (req, res) {
+  const path = '/api/locations';
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: 'GET',
+    json: {},
+    qs: {
+      lng: req.query.lng,
+      lat: req.query.lat,
+      distance: req.query.distance,
+    },
+  };
+  request(
+    requestOptions, (err, response, data) => {
+      if (data && data.length) {
+        for (let i = 0; i < data.length; i += 1) {
+          data[i].distance = _formatDistance(data[i].distance);
+        }
+      }
+      if (err) {
+        return res.render('error', { message: 'Error requesting location list', error: err });
+      }
+      if (response.statusCode !== 200) {
+        return res.render('error', { message: 'Error requesting location list', error: `${response.statusCode} - ${response.statusMessage}` });
+      }
+      return _renderHomePAge(req, res, data);
+    },
+  );
 };
 
 const locationInfo = function (req, res) {
@@ -68,40 +82,8 @@ const locationInfo = function (req, res) {
   );
 };
 
-const locationSearch = function (req, res) {
-  const mapInit = () => {
-    const showPosition = (position) => {
-      console.log(`Geolocation position is: [${position.coords.latitude}, ${position.coords.longitude}]`);
-      const currentLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-      const marker = new google.maps.Marker({
-        position: currentLocation,
-        map: map,
-      });
-      map.setCenter(currentLocation);
-    }
-
-    const getLocation = () => {
-      if (navigator.geolocation) {
-        console.log('Geolocation is available');
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        console.log('Geolocation is not available');
-      }
-    }
-
-    const map = new google.maps.Map(document.getElementById('map'), {
-      zoom : 8,
-      center : { lat: -25.363, lng: 131.044 },
-    });
-
-    getLocation();
-  };
-
-  res.render('location-search', { title: 'Loc8r search', mapInit, mapKey });
-};
-
 const addReview = function (req, res) {
   res.render('location-review-form', { title: 'Add a Review' });
 };
 
-export { locationSearch, locationsList, locationInfo, addReview };
+export { locationsList, locationInfo, addReview };

@@ -10,8 +10,6 @@ block content
   div.row
     div.col-xs-12.col-sm-8
       div.row.list-group
-        each location in wifiLocations
-          +location(location)
-    div.col-xs-12.col-sm-4
-      p.lead Loc8r helps you find places to get online when out and about.
-  
+        -if (wifiLocations)
+          each location in wifiLocations
+            +location(location)

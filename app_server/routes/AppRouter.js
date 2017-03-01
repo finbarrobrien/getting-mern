@@ -1,13 +1,12 @@
 import express from 'express';
 import about from '../controllers/others';
-import { locationSearch, locationsList, locationInfo, addReview } from '../controllers/locations';
+import { locationsList, locationInfo, addReview } from '../controllers/locations';
 
 const AppRouter = express.Router();
 
-
 /* Locations pages */
-AppRouter.get('/', locationSearch);
-AppRouter.get('/locations', locationSearch);
+AppRouter.get('/', locationsList);
+AppRouter.get('/locations', locationsList);
 AppRouter.get('/location/:locationId', locationInfo);
 AppRouter.get('/location/review/new', addReview);
 

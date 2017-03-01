@@ -7,7 +7,6 @@ import less from 'less-middleware';
 
 import AppRouter from './app_server/routes/AppRouter';
 import RestRouter from './rest_api/routes/RestRouter';
-import mongoDbConn from './db';
 
 const app = express();
 
@@ -45,4 +44,4 @@ app.use((err, req, res) => {
 });
 
 const mapKey = process.env.MAP_KEY;
-export { app, mongoDbConn, mapKey };
+export { app, mapKey };
