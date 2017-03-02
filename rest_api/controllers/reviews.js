@@ -9,15 +9,19 @@ const _sendJsonResponse = (res, status, content) => {
 
 const _setAverageStars = (location) => {
   const updatedLocation = location;
+
   if (updatedLocation.reviews && updatedLocation.reviews.length > 0) {
-    let total;
+    let total = 0;
     for (let i = 0; i < updatedLocation.reviews.length; i += 1) {
       total += updatedLocation.reviews[i].stars;
     }
     // parse average as a decimal number (base 10)
+    console.log(`${total} / ${updatedLocation.reviews.length}`);
     updatedLocation.stars = parseInt(total / updatedLocation.reviews.length, 10);
+    console.log(updatedLocation);
     updatedLocation.save((saveErr) => {
       if (saveErr) {
+        console.log(saveErr);
         return saveErr;
       }
       console.log(`Average rating updated to ${updatedLocation.stars}`);
@@ -28,7 +32,7 @@ const _setAverageStars = (location) => {
 };
 
 const _updateAverageStars = (locationId, callback) => {
-  return Loc.findById(locationId).select('rating reviews').exec((findErr, location) => {
+  return Loc.findById(locationId).select('stars reviews').exec((findErr, location) => {
     if (findErr) {
       callback(findErr);
     } else {
@@ -37,14 +41,15 @@ const _updateAverageStars = (locationId, callback) => {
   });
 };
 
-const doAddReview = (req, res, location) => {
+const _doAddReview = (req, res, location) => {
   const updatedLocation = location;
   if (!updatedLocation) {
     return _sendJsonResponse(res, 404, { message: 'location is missing' });
   }
+  console.log(req.body);
   updatedLocation.reviews.push({
     reviewer: req.body.reviewer,
-    stars: req.body.stars,
+    stars: parseInt(req.body.stars, 10),
     comment: req.body.comment,
   });
   return updatedLocation.save((saveErr, loc) => {
@@ -53,9 +58,9 @@ const doAddReview = (req, res, location) => {
     }
     return _updateAverageStars(loc._id, (updateErr) => {
       if (updateErr) {
-        return _sendJsonResponse(res, 500, updateErr);
+        _sendJsonResponse(res, 500, updateErr);
       }
-      return _sendJsonResponse(res, 201, loc.reviews[loc.reviews.length - 1]);
+      _sendJsonResponse(res, 201, loc.reviews[loc.reviews.length - 1]);
     });
   });
 };
@@ -68,7 +73,7 @@ const reviewsCreate = (req, res) => {
       } else if (findErr) {
         return _sendJsonResponse(res, 400, findErr);
       }
-      return doAddReview(req, res, location);
+      return _doAddReview(req, res, location);
     });
   }
   return _sendJsonResponse(res, 400, { message: 'locationId is required' });

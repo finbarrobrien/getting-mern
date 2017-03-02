@@ -1,6 +1,6 @@
 import express from 'express';
 import about from '../controllers/others';
-import { locationList, locationInfo, addReview } from '../controllers/locations';
+import { locationList, locationInfo, addReviewForm, doAddReview } from '../controllers/locations';
 
 const AppRouter = express.Router();
 
@@ -8,7 +8,8 @@ const AppRouter = express.Router();
 AppRouter.get('/', locationList);
 AppRouter.get('/location', locationList);
 AppRouter.get('/location/:locationId', locationInfo);
-AppRouter.get('/location/review/new', addReview);
+AppRouter.get('/location/:locationId/review/new', addReviewForm);
+AppRouter.post('/location/:locationId/review/new', doAddReview);
 
 /* Others pages */
 AppRouter.get('/about', about);
