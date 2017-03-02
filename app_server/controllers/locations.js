@@ -3,7 +3,7 @@ import { mapKey } from '~/app';
 
 const apiOptions = {
   server: 'http://localhost:3000',
-}
+};
 
 if (process.env.NODE_ENV === 'production') {
   apiOptions.server = 'http://pure-castle-77017.herokuapp.com';
@@ -35,8 +35,7 @@ const _renderHomePage = (req, res, wifiLocations) => {
     'help you find the place you\'re looking for.',
     wifiLocations,
   });
-
-}
+};
 
 const _formatDistance = (distance) => {
   if (distance > 1000) {
@@ -70,7 +69,7 @@ const locationList = (req, res) => {
       if (response.statusCode !== 200) {
         return _showError(res, `${response.statusCode} - ${response.statusMessage}`);
       }
-      return _renderHomePage(req, response, data);
+      return _renderHomePage(req, res, data);
     },
   );
 };
@@ -95,11 +94,10 @@ const _getLocationInfo = (req, res, callback) => {
   );
 };
 
-const locationInfo = (req, res) => {
-  return _getLocationInfo(req, res, (location) => {
+const locationInfo = (req, res) =>
+  _getLocationInfo(req, res, (location) => {
     res.render('location-info', { title: 'Location Info', location, mapKey });
   });
-};
 
 const addReviewForm = (req, res) => {
   if (!req.params.locationId) {

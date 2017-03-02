@@ -13,21 +13,11 @@ const _sendJsonResponse = (res, status, content) => {
   res.end();
 };
 
-const _createLocation = (location, callback) => {
-  Loc.create(location, (err, loc) => {
-    if (callback) {
-      callback(err, loc);
-    } else {
-      if (err) {
-        console.log(err);
-      }
-      console.log(`created location: ${location.name}`);
-    }
-  });
-};
+const _createLocation = (location, callback) =>
+  Loc.create(location, callback);
 
 const locationCreate = (req, res) => {
-  _createLocation({
+  const newLocation = {
     name: req.body.name,
     address: req.body.address,
     facilities: req.body.facilities.split(','),
@@ -43,12 +33,16 @@ const locationCreate = (req, res) => {
       close: req.body.closing2,
       closed: req.body.closed2,
     }],
-  }, (err, location) => {
+  };
+
+  const callback = (err, loc) => {
     if (err) {
       return _sendJsonResponse(res, 400, err);
     }
-    return _sendJsonResponse(res, 201, location);
-  });
+    return _sendJsonResponse(res, 201, loc);
+  };
+
+  return _createLocation(newLocation, callback);
 };
 
 const locationListByDistance = (req, res) => {
@@ -64,14 +58,12 @@ const locationListByDistance = (req, res) => {
     num: 3000,
     maxDistance: parseInt(req.query.distance, 10),
   };
-  console.log(geoOptions);
 
-  Loc.geoNear(point, geoOptions, (err, results) => {
+  return Loc.geoNear(point, geoOptions, (err, results) => {
     const locations = [];
     if (err) {
       return _sendJsonResponse(res, 400, err);
     }
-    console.log(results);
     results.forEach((doc) => {
       locations.push({
         distance: doc.dis,
@@ -128,9 +120,9 @@ const locationUpdateOne = (req, res) => {
       closed: req.body.closed2,
     }];
 
-    updateLocation.save((err2, loc) => {
+    return updateLocation.save((err2, loc) => {
       if (err2) {
-        return _sendJsonResponse(res, 404, err2);
+        return _sendJsonResponse(res, 400, err2);
       }
       return _sendJsonResponse(res, 200, loc);
     });
@@ -139,11 +131,11 @@ const locationUpdateOne = (req, res) => {
 
 const locationDeleteOne = (req, res) => {
   if (!req.params.locationId) {
-    return _sendJsonResponse(res, 404, { message: 'locationId is required' });
+    return _sendJsonResponse(res, 400, { message: 'locationId is required' });
   }
   return Loc.findByIdAndRemove(req.params.locationId).exec((err) => {
     if (err) {
-      return _sendJsonResponse(res, 404, err);
+      return _sendJsonResponse(res, 400, err);
     }
     return _sendJsonResponse(res, 204, null);
   });
@@ -151,10 +143,18 @@ const locationDeleteOne = (req, res) => {
 
 const locationRandomData = (req, res) => {
   const data = randomData();
+  const errors = [];
+  const callback = (err) => {
+    if (err) {
+      errors.push({ err });
+    }
+  };
   data.forEach((current) => {
-    console.log(`Added location ${current.name}`);
-    _createLocation(current);
+    _createLocation(current, callback);
   });
+  if (errors.length) {
+    return _sendJsonResponse(res, 400, errors);
+  }
   return _sendJsonResponse(res, 200, data);
 };
 

@@ -31,15 +31,15 @@ const _setAverageStars = (location) => {
   return null;
 };
 
-const _updateAverageStars = (locationId, callback) => {
-  return Loc.findById(locationId).select('stars reviews').exec((findErr, location) => {
+const _updateAverageStars = (locationId, callback) =>
+  Loc.findById(locationId).select('stars reviews').exec((findErr, location) => {
     if (findErr) {
       callback(findErr);
     } else {
       callback(_setAverageStars(location));
     }
   });
-};
+
 
 const _doAddReview = (req, res, location) => {
   const updatedLocation = location;

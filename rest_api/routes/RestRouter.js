@@ -12,7 +12,6 @@ RestRouter.get('/location/:locationId', locationReadOne);
 RestRouter.put('/location/:locationId', locationUpdateOne);
 RestRouter.delete('/location/:locationId', locationDeleteOne);
 
-
 RestRouter.get('/location/:locationId/reviews/:reviewId', reviewsReadOne);
 RestRouter.post('/location/:locationId/reviews', reviewsCreate);
 RestRouter.put('/location/:locationId/reviews/:reviewId', reviewsUpdateOne);
