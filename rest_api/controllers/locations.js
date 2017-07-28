@@ -1,6 +1,7 @@
 /**
  * Controller for the location REST API endpoints
  */
+import moment from 'moment';
 import { mongoDbConn } from '../../db';
 import randomData from '../../test/data/dataGenerator';
 
@@ -12,24 +13,7 @@ const _sendJsonResponse = (res, status, content) => {
   res.json(content);
   res.end();
 };
-/*
-const _formatDate = (date) => {
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-  return `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
-}*/
+
 const _createLocation = (location, callback) =>
   Loc.create(location, callback);
 
@@ -105,11 +89,10 @@ const locationReadOne = (req, res) => {
       if (err) {
         return _sendJsonResponse(res, 500, err);
       }
-      /*for (let i = 0; i < location.reviews.length; i += 1) {
-        const formattedDate = _formatDate(location.reviews[i].date);
-        location.reviews[i].date = formattedDate;
+      for (let i = 0; i < location.reviews.length; i += 1) {
+        location.reviews[i].date = moment(location.reviews[i].date).format('DD MMM YYYY');
         console.log(location.reviews[i].date);
-      }*/
+      }
       return _sendJsonResponse(res, 200, location);
     });
   }
