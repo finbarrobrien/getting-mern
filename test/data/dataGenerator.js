@@ -5,11 +5,14 @@ import faker from 'faker';
 
 const randomData = () => {
   const data = [];
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 10000; i += 1) {
     data.push({
       name: faker.company.companyName(),
       address: faker.address.streetAddress(),
-      latLng: [Number(faker.address.longitude()), Number(faker.address.latitude())],
+      latLng: [
+        (-((Math.random() * (10.5 - 5.4)) + 5.4)).toFixed(4),
+        ((Math.random() * (55.4 - 51.4)) + 51.4).toFixed(4),
+      ],
       openingTimes: [{
         days: 'Monday - Friday',
         open: '08:00',
