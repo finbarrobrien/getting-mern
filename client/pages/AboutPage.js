@@ -1,14 +1,23 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import SPAPage from '../components/SPAPage';
 
-import NavBar from '../components/NavBar';
+const AboutPage = () =>
+  <SPAPage bannerTitle="About">
+    <block className="container">
+      <div className="row">
+        <div className="col-md-6.col-sm-12">
+          <p>
+          Loc8r was created to help people find places to sit down and get a bit of work done.
+          <br /><br />
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed lorem ac nisi dignissim accumsan. Nullam sit amet interdum magna. Morbi quis faucibus nisi. Vestibulum mollis purus quis eros adipiscing tristique. Proin posuere semper tellus, id placerat augue dapibus ornare. Aenean leo metus, tempus in nisl eget, accumsan interdum dui. Pellentesque sollicitudin volutpat ullamcorper.
+          <br /><br />
+          Suspendisse tincidunt, lectus non suscipit pharetra, purus ipsum vehicula sapien, a volutpat mauris ligula vel dui. Proin varius interdum elit, eu porttitor quam consequat et. Quisque vitae felis sed ante fringilla fermentum in vitae sem. Quisque fermentum metus at neque sagittis imperdiet. Phasellus non laoreet massa, eu laoreet nibh. Pellentesque vel magna vulputate, porta augue vel, dapibus nisl. Phasellus aliquet nibh nec nunc posuere fringilla. Quisque sit amet dignissim erat. Nulla facilisi. Donec in sollicitudin ante. Cras rhoncus accumsan rutrum. Sed aliquet ligula dui, eget laoreet turpis tempor vitae.
+          </p>
+        </div>
+      </div>
+    </block>
+  </SPAPage>
+;
 
-export default class AboutPage extends Component {
+export default AboutPage;
 
-  render() {
-    return (<div>
-      <NavBar />
-    </div>);
-  }
-
-}

@@ -6,4 +6,4 @@ import LocationInfoPage from './LocationInfoPage';
 import LocationListPage from './LocationListPage';
 import LocationReviewFormPage from './LocationReviewFormPage';
 
-export { AboutPage, ErrorPage, HomePage, LocationListPage, LocationInfoPage, LocationReviewFormPage };
+export { App, AboutPage, ErrorPage, HomePage, LocationListPage, LocationInfoPage, LocationReviewFormPage };

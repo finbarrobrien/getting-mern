@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import NavBar from './NavBar';
+import Footer from './Footer';
+import Banner from './Banner';
 
-class SPAPage extends Component {
-
-  render() {
-    return (
-      <block className="content" >
-        <h1>{ this.props.title }</h1>
-        <p>{ `Welcome to ${title}` }</p>
-      </block>
-    );
-  }
-
-}
+const SPAPage = props =>
+  <div>
+    <NavBar />
+    <div className="container">
+      <Banner title={ props.bannerTitle } subTitle={ props.subTitle } />
+      { props.children }
+      <Footer copyrightHolder="Finbarr O'Brien" copyrightYear="2017" />
+    </div>
+  </div>
+;
 
 export default SPAPage;

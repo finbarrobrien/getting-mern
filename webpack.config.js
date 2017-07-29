@@ -1,12 +1,25 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const plugins = [
   new HtmlWebpackPlugin({
-    filename: '../index.html',
+    filename: 'index.html',
     template: 'templates/index.html.template',
     inject: 'body',
+  }),
+  new CopyWebpackPlugin([{
+    from: path.resolve(__dirname, './node_modules/bootstrap/dist/css/bootstrap.min.css'),
+    to: path.resolve(__dirname, 'build/static/css'),
+  }]),
+  new HtmlWebpackIncludeAssetsPlugin({
+    append: false,
+    files: 'index.html',
+    assets: [
+      'static/css/bootstrap.min.css',
+    ],
   }),
 ];
 
@@ -32,11 +45,10 @@ const config = {
   output: {
     path: path.resolve(__dirname, './build'), // specifies where output bundle is stored
     filename: '[name]-[hash]-bundle.js', // output filename for bundle, interpolation done on name, hash, checksum
-    publicPath: 'build',
-
+    publicPath: '/',
   },
     // specify to create source map
-  //devtool: 'source-map',
+  devtool: 'source-map',
     // Configures the loaders we need for static assets
   module: {
     loaders: [
@@ -44,7 +56,7 @@ const config = {
         loader: 'babel-loader', // refers to babel-loader
         test: /\.js$/,
         include: [
-          path.resolve(process.cwd(), 'client/')
+          path.resolve(process.cwd(), 'client/'),
         ],
         options: {
           presets: ['es2015', 'react', 'stage-0'],

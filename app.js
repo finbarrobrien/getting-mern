@@ -5,7 +5,7 @@ import path from 'path';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import less from 'less-middleware';
+//import less from 'less-middleware';
 
 import RestRouter from './rest_api/routes/RestRouter';
 
@@ -16,13 +16,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(less(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'build')));
 app.use('/api', RestRouter);
 
 // All other routes render index.html
 app.get('*', (req, res) => {
-  res.render(path.join(__dirname, 'index.html'));
+  console.log(req);
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // catch 404 and forward to error handler

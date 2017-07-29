@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import SPAPage from '../components/SPAPage';
 
-import NavBar from '../components/NavBar';
+const ErrorPage = props =>
+  <SPAPage bannerTitle="Oops, An Error Occurred">
+    <block className="container">
+      <pre>{ props.error }</pre>
+      <p>{ props.errorMessage }</p>
+    </block>
+  </SPAPage>
+;
 
-export default class ErrorPage extends Component {
+export default ErrorPage;
 
-  render() {
-    return (<div>
-      <NavBar />
-    </div>);
-  }
-
-}

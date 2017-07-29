@@ -4,15 +4,18 @@ import { Link } from 'react-router-dom';
 
 
 const NavBar = () =>
-  <Navbar>
+  <Navbar fixedTop >
     <Navbar.Header>
       <Navbar.Brand>
         <Link to="/">Loc8r</Link>
       </Navbar.Brand>
+      <Navbar.Toggle />
     </Navbar.Header>
-    <Nav id="navbar-main">
-      <NavItem eventKey={1}><Link to="/about/">About</Link></NavItem>
-    </Nav>
+    <Navbar.Collapse>
+      <Nav id="navbar-main">
+        <NavItem eventKey={1} href="/about/">About</NavItem>
+      </Nav>
+    </Navbar.Collapse>
   </Navbar>;
 
 export default NavBar;
