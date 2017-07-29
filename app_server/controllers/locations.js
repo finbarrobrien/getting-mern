@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+
 import { mapKey } from '~/app';
 
 const apiOptions = {
@@ -44,17 +44,7 @@ const _formatDistance = (distance) => {
   return `${parseInt(distance, 10)}m`;
 };
 
-const apiGet = (url) => {
-  fetch(url, {
-    mode: 'no-cors',
-  }).then((resp) => {
 
-  }).then((json) => {
-
-  }).catch((err) => {
-
-  });
-};
 
 const locationList = (req, res) => {
   const path = '/api/location';

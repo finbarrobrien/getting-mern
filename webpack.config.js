@@ -11,6 +11,10 @@ const plugins = [
     inject: 'body',
   }),
   new CopyWebpackPlugin([{
+    from: path.resolve(__dirname, './node_modules/bootstrap/dist/fonts'),
+    to: path.resolve(__dirname, 'build/static/fonts'),
+  }]),
+  new CopyWebpackPlugin([{
     from: path.resolve(__dirname, './node_modules/bootstrap/dist/css/bootstrap.min.css'),
     to: path.resolve(__dirname, 'build/static/css'),
   }]),

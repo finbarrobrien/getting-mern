@@ -2,14 +2,21 @@ import React from 'react';
 import StarRating from './StarRating';
 import Facility from './Facility';
 
+const _formatDistance = (distance) => {
+  if (distance > 1000) {
+    return `${parseFloat(distance / 1000).toFixed(1)}Km`;
+  }
+  return `${parseInt(distance, 10)}m`;
+};
+
 const Location = (props) => {
-  const { name, stars, distance, address, facilities, id } = props.location;
+  const { name, stars, distance, address, facilities, _id } = props.location;
   return (
     <div className="col-xs-12 list-group-item">
       <h4>
-        <a href={ `/location/${id}` }>{ name }</a>
+        <a href={ `/location/${_id}` }>{ name }</a>
         <small>&nbsp; <StarRating stars={ stars } /></small>
-        <span className="badge pull-right badge-default">{ distance }</span>
+        <span className="badge pull-right badge-default">{ _formatDistance(distance) }</span>
       </h4>
       <p className="address">{ address }</p>
       <p>

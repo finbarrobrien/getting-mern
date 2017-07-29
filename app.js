@@ -43,8 +43,8 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-/*const mapKey = process.env.MAP_KEY;
-export { app, mapKey };*/
+const mapKey = process.env.MAP_KEY;
+export { mapKey };
 
 /**
  * Normalize a port into a number, string, or false.
