@@ -42,6 +42,7 @@ const _updateAverageStars = (locationId, callback) =>
 
 
 const _doAddReview = (req, res, location) => {
+  console.log(location);
   const updatedLocation = location;
   if (!updatedLocation) {
     return _sendJsonResponse(res, 404, { message: 'location is missing' });
@@ -66,6 +67,7 @@ const _doAddReview = (req, res, location) => {
 };
 
 const reviewsCreate = (req, res) => {
+  console.log('hello');
   if (req.params.locationId) {
     return Loc.findById(req.params.locationId).select('reviews').exec((findErr, location) => {
       if (!location) {

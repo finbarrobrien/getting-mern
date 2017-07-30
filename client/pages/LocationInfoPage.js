@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import SPAPage from '../components/SPAPage';
 import StarRating from '../components/StarRating';
 import Facility from '../components/Facility';
@@ -18,7 +19,6 @@ export default class LocationInfoPage extends Component {
     fetch(`http://localhost:3000/api/${this.props.match.url}`, {
       mode: 'no-cors',
     }).then((resp) => {
-      console.log(resp);
       if (resp.ok) {
         return resp.json();
       }
@@ -27,7 +27,6 @@ export default class LocationInfoPage extends Component {
         errorMessage: resp.statusText,
       };
     }).then((data) => {
-      console.log(data);
       this.setState({ data: data });
     }).catch((err) => {
       console.log(err);
@@ -39,7 +38,6 @@ export default class LocationInfoPage extends Component {
   }
 
   render() {
-    console.log(this.state);
     if (!this.state.data){
       return null;
     }
@@ -92,7 +90,7 @@ export default class LocationInfoPage extends Component {
                     <div className="panel-body">
                       <img alt={ `asdfasdfas` }
                         className="img-responsive img-rounded"
-                        src={ `http://maps.googleapis.com/maps/api/staticmap?key=????????&center=${latLng[1]},${latLng[0]}&zoom=14&size=400x350&sensor=false&markers=${latLng[1]},${latLng[0]}&scale=2` } />
+                        src={ `http://maps.googleapis.com/maps/api/staticmap?key=AIzaSyC0MnlTnNRj8IA7n0vf922f96Js-KMPF5o&center=${latLng[1]},${latLng[0]}&zoom=14&size=400x350&sensor=false&markers=${latLng[1]},${latLng[0]}&scale=2` } />
                     </div>
                   </div>
                 </div>
@@ -101,7 +99,13 @@ export default class LocationInfoPage extends Component {
                 <div className="col-xs-12">
                   <div className="panel panel-primary review-panel">
                     <div className="panel-heading">
-                      <a className="btn btn-default pull-right" href={ `/location/${_id}/review/new` }>Add review</a>
+                      <Link className="btn btn-default pull-right" to={{
+                        pathname: `/location/${_id}/review/new`,
+                        state: {
+                          locationId: _id,
+                          name,
+                        }
+                      }}>Add review</Link>
                       <h2 className="panel-title">Customer reviews</h2>
                     </div>
                     <div className="panel-body review-container">
