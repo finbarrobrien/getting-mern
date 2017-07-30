@@ -31,6 +31,7 @@ class HomePage extends Component {
       console.log(err);
     });
   }
+
   componentDidMount() {
     this.getApiData();
   }

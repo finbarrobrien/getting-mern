@@ -11,6 +11,10 @@ import RestRouter from './rest_api/routes/RestRouter';
 
 const app = express();
 
+const mapKey=process.env.MAP_KEY;
+export { mapKey };
+
+
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -43,8 +47,7 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-const mapKey = process.env.MAP_KEY;
-export { mapKey };
+
 
 /**
  * Normalize a port into a number, string, or false.

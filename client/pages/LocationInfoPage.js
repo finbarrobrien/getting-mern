@@ -1,12 +1,49 @@
 import React, { Component } from 'react';
 import SPAPage from '../components/SPAPage';
-import StarRating from './StarRating';
-import Facility from './Facility';
+import StarRating from '../components/StarRating';
+import Facility from '../components/Facility';
+import Review from '../components/Review';
 
 export default class LocationInfoPage extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      data: null
+    };
+  }
+
+
+  getApiData = () => {
+    fetch(`http://localhost:3000/api/${this.props.match.url}`, {
+      mode: 'no-cors',
+    }).then((resp) => {
+      console.log(resp);
+      if (resp.ok) {
+        return resp.json();
+      }
+      return {
+        errorCode: resp.status,
+        errorMessage: resp.statusText,
+      };
+    }).then((data) => {
+      console.log(data);
+      this.setState({ data: data });
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  componentDidMount() {
+    this.getApiData();
+  }
+
   render() {
-    const {name, _id, stars, distance, address, facilities, openingTimes, latLng } = props.location;
+    console.log(this.state);
+    if (!this.state.data){
+      return null;
+    }
+    const {name, _id, stars, distance, address, facilities, openingTimes, latLng, reviews } = this.state.data;
     return (
       <SPAPage bannerTitle={ name }>
         <div className="container">
@@ -21,7 +58,15 @@ export default class LocationInfoPage extends Component {
                       <h2 className="panel-title">Opening Hours</h2>
                     </div>
                     <div className="panel-body">
-                      // opening times loop
+                      {
+                        openingTimes && openingTimes.length ?
+                          openingTimes.map((time, index) => {
+                            return (time.closed ?
+                              <p key={ index }>{ `${time.days}: Closed` }</p> :
+                              <p key={ index }>{ `${time.days}: ${time.open}-${time.close}` }</p>);
+                          }) :
+                          null
+                      }
                     </div>
                   </div>
                   <div className="panel panel-primary">
@@ -47,7 +92,7 @@ export default class LocationInfoPage extends Component {
                     <div className="panel-body">
                       <img alt={ `asdfasdfas` }
                         className="img-responsive img-rounded"
-                        src={ `http://maps.googleapis.com/maps/api/staticmap?key=${mapKey}&center=${latLng[1]},${latLng[0]}&zoom=14&size=400x350&sensor=false&markers=${latLng[1]},${latLng[0]}&scale=2` } />
+                        src={ `http://maps.googleapis.com/maps/api/staticmap?key=????????&center=${latLng[1]},${latLng[0]}&zoom=14&size=400x350&sensor=false&markers=${latLng[1]},${latLng[0]}&scale=2` } />
                     </div>
                   </div>
                 </div>
@@ -60,7 +105,11 @@ export default class LocationInfoPage extends Component {
                       <h2 className="panel-title">Customer reviews</h2>
                     </div>
                     <div className="panel-body review-container">
-                      // reviews
+                      {
+                        reviews.map((review, index) => {
+                          return (<Review key={ index } review={ review } />);
+                        })
+                      }
                     </div>
                   </div>
                 </div>
