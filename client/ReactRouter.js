@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { App, AboutPage, ErrorPage, HomePage, LocationListPage, LocationInfoPage, LocationReviewFormPage } from './pages';
 
 const routes = [
@@ -14,7 +14,9 @@ const routes = [
 const ReactRouter = () =>
   <BrowserRouter>
     <App>
-      { routes }
+      <Switch>
+        { routes }
+      </Switch>
     </App>
   </BrowserRouter>;
 

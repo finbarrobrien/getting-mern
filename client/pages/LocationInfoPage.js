@@ -102,6 +102,7 @@ export default class LocationInfoPage extends Component {
                       <Link className="btn btn-default pull-right" to={{
                         pathname: `/location/${_id}/review/new`,
                         state: {
+                          modal: true,
                           locationId: _id,
                           name,
                         }
