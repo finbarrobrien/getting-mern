@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 const LocationInfoPage = ({ data, onClick, match }) => {
-  console.log(this);
+  console.log(data);
   if (!data) {
     return (
       <SPAPage>
