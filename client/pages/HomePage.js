@@ -3,7 +3,7 @@ import SPAPage from '../components/SPAPage';
 import Location from '../components/Location';
 import ErrorPage from './ErrorPage';
 
-class HomePage extends Component {
+export default class HomePage extends Component {
 
   constructor(props) {
     super(props);
@@ -65,6 +65,4 @@ class HomePage extends Component {
   }
 
 }
-
-export default HomePage;
 

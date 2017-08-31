@@ -2,14 +2,14 @@ import React from 'react';
 import StarRating from './StarRating';
 import moment from 'moment';
 
-const Review = props => {
-  const { reviewer, stars, date, comment } = props.review;
+const Review = ({ review }) => {
+  const { reviewer, stars, date, comment } = review;
   return (
     <div className="row">
       <div className="review">
         <div className="well well-sm review-header">
           <StarRating stars={ stars } />
-          <span className="reviewAuthor">{ reviewer }</span>
+          <span className="reviewAuthor">&nbsp;&#8226;&nbsp;{ reviewer }&nbsp;&#8226;&nbsp;</span>
           <small className="reviewTimestamp">
             { moment(date).format('DD MMM YYYY') }
           </small>

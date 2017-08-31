@@ -1,7 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactRouter from './ReactRouter';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { devToolsEnhancer } from 'redux-devtools-extension';
+import Loc8rRouter from './Loc8rRouter';
+import Loc8rApp from './reducers';
+import initialStore from './redux-store/templateStore';
+
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<ReactRouter />, document.getElementById('app'));
+let store = createStore(Loc8rApp, initialStore, devToolsEnhancer());
+
+render(
+  <Provider store={ store }>
+    <Loc8rRouter />
+  </Provider>, document.getElementById('app')
+);
 //registerServiceWorker();

@@ -1,9 +1,10 @@
 import React from 'react';
 
-const App = props =>
-  <div>
-    { props.children }
-  </div>
-;
+const App = ({ children }) => {
+  return (
+    <div>
+      { children }
+    </div>);
+};
 
 export default App;

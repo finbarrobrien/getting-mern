@@ -13,7 +13,7 @@ const NavBar = () =>
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav id="navbar-main">
-        <NavItem eventKey={1} href="/about/">About</NavItem>
+        <NavItem eventKey={1}><Link to="/about">About</Link></NavItem>
       </Nav>
     </Navbar.Collapse>
   </Navbar>;

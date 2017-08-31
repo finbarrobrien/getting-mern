@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Footer = props =>
+const Footer = ({ copyrightHolder, copyrightYear }) =>
   <footer>
     <div className="row">
       <div className="col-xs-12">
-        <small>&copy; { `${props.copyrightHolder} ${props.copyrightYear}` }</small>
+        <small>&copy; { `${copyrightHolder} ${copyrightYear}` }</small>
       </div>
     </div>
   </footer>

@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import NavBar from '../components/NavBar';
 
-export default class LocationListPage extends Component {
-
-  render() {
-    return (<div>
+const LocationListPage = () => {
+  return (
+    <div>
       <NavBar />
     </div>);
-  }
+};
 
-}
+export default LocationListPage;

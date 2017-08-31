@@ -91,7 +91,6 @@ const locationReadOne = (req, res) => {
       }
       for (let i = 0; i < location.reviews.length; i += 1) {
         location.reviews[i].date = moment(location.reviews[i].date).format('DD MMM YYYY');
-        console.log(location.reviews[i].date);
       }
       return _sendJsonResponse(res, 200, location);
     });

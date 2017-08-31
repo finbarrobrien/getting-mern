@@ -1,7 +1,7 @@
 import React from 'react';
 import SPAPage from '../components/SPAPage';
 
-const AboutPage = () =>
+const AboutPage = ({ aboutText }) =>
   <SPAPage bannerTitle="About">
     <block className="container">
       <div className="row">

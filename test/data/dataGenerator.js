@@ -5,7 +5,7 @@ import faker from 'faker';
 
 const randomData = () => {
   const data = [];
-  for (let i = 0; i < 10000; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     data.push({
       name: faker.company.companyName(),
       address: faker.address.streetAddress(),
@@ -32,14 +32,18 @@ const randomData = () => {
       facilities: ['coffee', 'wifi'],
       reviews: [],
     });
+    let average = 0;
     for (let j = 0; j < 20; j += 1) {
+      const stars = (faker.random.number() % 5) + 1;
+      average += stars;
       data[i].reviews.push({
         reviewer: faker.name.findName(),
-        stars: faker.random.number() % 5,
+        stars: stars,
         date: Date.now(),
         comment: faker.lorem.sentence(),
       });
     }
+    data[i].stars = Math.round(average / 20);
   }
   return data;
 }

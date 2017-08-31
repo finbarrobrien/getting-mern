@@ -23,7 +23,6 @@ const _showError = (res, message) => {
 };
 
 const _renderHomePage = (req, res, wifiLocations) => {
-  console.log(wifiLocations);
   return res.render('locations-list', {
     title: 'Loc8r - find a place to work with wifi',
     pageHeader: {

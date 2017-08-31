@@ -13,6 +13,7 @@
   "dependencies": {
     "@google/maps": "^0.3.1",
     "babel-loader": "^7.1.1",
+    "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
     "cookie-parser": "~1.4.3",
     "express": "~4.14.0",
@@ -30,9 +31,10 @@
     "react": "^15.4.2",
     "react-bootstrap": "^0.31.1",
     "react-dom": "^15.4.2",
-    "react-redux": "^5.0.2",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.2",
-    "redux": "^3.6.0",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "request": "^2.79.0",
     "scriptjs": "^2.5.8",
     "serve-favicon": "~2.3.0"

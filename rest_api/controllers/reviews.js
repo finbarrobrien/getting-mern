@@ -16,15 +16,11 @@ const _setAverageStars = (location) => {
       total += updatedLocation.reviews[i].stars;
     }
     // parse average as a decimal number (base 10)
-    console.log(`${total} / ${updatedLocation.reviews.length}`);
     updatedLocation.stars = parseInt(total / updatedLocation.reviews.length, 10);
-    console.log(updatedLocation);
     updatedLocation.save((saveErr) => {
       if (saveErr) {
-        console.log(saveErr);
         return saveErr;
       }
-      console.log(`Average rating updated to ${updatedLocation.stars}`);
       return null;
     });
   }
@@ -42,19 +38,19 @@ const _updateAverageStars = (locationId, callback) =>
 
 
 const _doAddReview = (req, res, location) => {
-  console.log(location);
   const updatedLocation = location;
   if (!updatedLocation) {
     return _sendJsonResponse(res, 404, { message: 'location is missing' });
   }
-  console.log(req.body);
-  updatedLocation.reviews.push({
+  console.log(req);
+  updatedLocation.reviews.unshift({
     reviewer: req.body.reviewer,
     stars: parseInt(req.body.stars, 10),
     comment: req.body.comment,
   });
   return updatedLocation.save((saveErr, loc) => {
     if (saveErr) {
+      console.log(saveErr);
       return _sendJsonResponse(res, 400, saveErr);
     }
     return _updateAverageStars(loc._id, (updateErr) => {
@@ -67,7 +63,6 @@ const _doAddReview = (req, res, location) => {
 };
 
 const reviewsCreate = (req, res) => {
-  console.log('hello');
   if (req.params.locationId) {
     return Loc.findById(req.params.locationId).select('reviews').exec((findErr, location) => {
       if (!location) {
@@ -78,6 +73,7 @@ const reviewsCreate = (req, res) => {
       return _doAddReview(req, res, location);
     });
   }
+  console.log('error');
   return _sendJsonResponse(res, 400, { message: 'locationId is required' });
 };
 
@@ -125,7 +121,6 @@ const reviewsReadOne = (req, res) => {
         return _sendJsonResponse(res, 500, findErr);
       }
       if (location.reviews && location.reviews.length > 0) {
-        console.log(location.reviews);
         review = location.reviews.id(req.params.reviewId);
         if (!review) {
           return _sendJsonResponse(res, 404, { message: 'reviewId not found' });

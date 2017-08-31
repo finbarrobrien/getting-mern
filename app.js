@@ -1,31 +1,26 @@
 import express from 'express';
 import http from 'http';
-
 import path from 'path';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-//import less from 'less-middleware';
-
 import RestRouter from './rest_api/routes/RestRouter';
 
 const app = express();
 
-const mapKey=process.env.MAP_KEY;
+const mapKey = process.env.MAP_KEY;
 export { mapKey };
 
 
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 app.use('/api', RestRouter);
 
 // All other routes render index.html
 app.get('*', (req, res) => {
-  console.log(req);
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 

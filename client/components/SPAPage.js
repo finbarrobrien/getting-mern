@@ -3,13 +3,13 @@ import NavBar from './NavBar';
 import Footer from './Footer';
 import Banner from './Banner';
 
-const SPAPage = props =>
+const SPAPage = ({ bannerTitle, subTitle, copyrightHolder, copyrightYear, children }) =>
   <div>
     <NavBar />
     <div className="container">
-      <Banner title={ props.bannerTitle } subTitle={ props.subTitle } />
-      { props.children }
-      <Footer copyrightHolder="Finbarr O'Brien" copyrightYear="2017" />
+      <Banner title={ bannerTitle } subTitle={ subTitle } />
+      { children }
+      <Footer copyrightHolder={copyrightHolder} copyrightYear={copyrightYear} />
     </div>
   </div>
 ;

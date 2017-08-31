@@ -9,8 +9,8 @@ const _formatDistance = (distance) => {
   return `${parseInt(distance, 10)}m`;
 };
 
-const Location = (props) => {
-  const { name, stars, distance, address, facilities, _id } = props.location;
+const Location = ({ location }) => {
+  const { name, stars, distance, address, facilities, _id } = location;
   return (
     <div className="col-xs-12 list-group-item">
       <h4>
