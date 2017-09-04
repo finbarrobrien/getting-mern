@@ -1,55 +1,52 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import SPAPage from '../components/SPAPage';
 import StarRating from '../components/StarRating';
 import Facility from '../components/Facility';
 import Review from '../components/Review';
-import { connect } from 'react-redux';
-import { setDataAction } from '../actions';
+import { getLocationInfo } from '../actions/async';
 
-const getApiData = (dispatch, url) => {
-  console.log('get data');
-  console.log(url);
-  fetch(`http://localhost:3000/api/${url}`, {
-    mode: 'no-cors',
-  }).then((resp) => {
-    if (resp.ok) {
-      return resp.json();
-    }
-    return {
-      errorCode: resp.status,
-      errorMessage: resp.statusText,
-    };
-  }).then((data) => {
-    console.log(data);
-    dispatch(setDataAction({ data }));
-  }).catch((err) => {
-    console.log(err);
-  });
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (store) => {
   return {
-    data: state.data,
+    data: store.locationInfo.data,
+    state: store.locationInfo.state,
   };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onClick: () => { getApiData(dispatch, ownProps.match.url); },
+    onLoad: () => { dispatch(getLocationInfo(ownProps.match.url)); },
   };
 };
 
-const LocationInfoPage = ({ data, onClick, match }) => {
-  console.log(data);
-  if (!data) {
-    return (
-      <SPAPage>
-        <button onClick={ onClick }>Hit me!</button>
-      </SPAPage>
-    );
+const LocationInfoPage = ({ data, state, onLoad, match }) => {
+  console.log(this);
+  console.log(state);
+  switch (state) {
+    case 'NO_DATA':
+      onLoad();
+      return (
+        <SPAPage>
+          <div>No data yet</div>
+        </SPAPage>
+      );
+    case 'LOADING':
+      return (
+        <SPAPage>
+          <div>Loading</div>
+        </SPAPage>
+      );
+    case 'ERROR':
+      return (
+        <SPAPage>
+          <div>Error</div>
+        </SPAPage>
+      );
+    default:
+      break;
   }
-  const { name, _id, stars, distance, address, facilities, openingTimes, latLng, reviews } = data;
+  const { name, _id, stars, address, facilities, openingTimes, latLng, reviews } = data;
   return (
     <SPAPage bannerTitle={ name }>
       <div className="container">

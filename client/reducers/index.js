@@ -1,11 +1,7 @@
-const loc8r = (state, action) => {
-  console.log(action);
-  switch (action.type) {
-    case 'set-data':
-      return Object.assign({}, state, { data: action.data });
-    default:
-      return state;
-  }
-}
+import { combineReducers } from 'redux';
+import locationList from './locationList';
+import locationInfo from './locationInfo';
+import error from './error';
 
+const loc8r = combineReducers({ locationList, locationInfo, error });
 export default loc8r;

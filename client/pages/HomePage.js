@@ -1,68 +1,59 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import SPAPage from '../components/SPAPage';
 import Location from '../components/Location';
 import ErrorPage from './ErrorPage';
+import { getLocationList } from '../actions/async';
 
-export default class HomePage extends Component {
+const mapStateToProps = (store) => {
+  return {
+    data: store.locationList.data,
+    state: store.locationList.state,
+  };
+}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      wifiLocations: [],
-      error: null,
-    };
-  }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLoad: () => { dispatch(getLocationList({ lat: 53.343510, lng: -6.260817, distance: 20000 })); },
+  };
+};
 
-  getApiData = () => {
-    fetch('http://localhost:3000/api/location?lng=-6.260817&lat=53.343510&distance=20000', {
-      mode: 'no-cors',
-    }).then((resp) => {
-      if (resp.ok) {
-        return resp.json();
-      }
-      return {
-        errorCode: resp.status,
-        errorMessage: resp.statusText,
-      };
-    }).then((data) => {
-      console.log(data);
-      this.setState({ wifiLocations: data });
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
-
-  componentDidMount() {
-    this.getApiData();
-  }
-
-  render() {
-    if (this.state.error) {
+const Page = ({ data, state, onLoad, match }) => {
+  switch (state) {
+    case 'ERROR':
       return (
-        <ErrorPage error={ this.state.error.errorCode } errorMessage={ this.props.error.errorMessage } />
+        <ErrorPage error={ 123 } errorMessage=' message error ' />
       );
-    }
-    console.log(this.state);
-    return (
-      <SPAPage bannerTitle="Loc8r" subTitle="Find places to work with wifi near you!">
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12 col-sm-8">
-              <div className="row list-group">
-                {
-                  this.state.wifiLocations.length ? this.state.wifiLocations.map((location) => {
-                    console.log(location);
-                    return (<Location key={ location._id } location={ location } />);
-                  }) :
-                    null
-                }
-              </div>
+    case 'NO_DATA':
+      onLoad();
+      return null; // Display laoding spinner until completed
+    case 'LOADING':
+      return null; // display spinner
+    default:
+      break;
+  }
+  return (
+    <SPAPage bannerTitle="Loc8r" subTitle="Find places to work with wifi near you!">
+      <div className="container">
+        <div className="row">
+          <div className="col-xs-12 col-sm-8">
+            <div className="row list-group">
+              {
+                data.length ? data.map((location) => {
+                  console.log(location);
+                  return (<Location key={ location._id } location={ location } />);
+                }) :
+                  null
+              }
             </div>
           </div>
         </div>
-      </SPAPage>
-    );
-  }
+      </div>
+    </SPAPage>
+  );
+};
 
-}
+const HomePage = connect(mapStateToProps, mapDispatchToProps)(Page);
+
+export default HomePage;
 
