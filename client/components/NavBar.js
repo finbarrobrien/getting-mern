@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 
@@ -13,7 +13,7 @@ const NavBar = () =>
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav id="navbar-main">
-        <NavItem eventKey={1}><Link to="/about">About</Link></NavItem>
+        <li className="nav-item"><Link to="/about" className="nav-link">About</Link></li>
       </Nav>
     </Navbar.Collapse>
   </Navbar>;

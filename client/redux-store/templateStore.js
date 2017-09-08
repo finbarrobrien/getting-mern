@@ -11,8 +11,10 @@ const initialStore = {
     state: 'NO_DATA',
     data: null,
   },
-  copyrightHolder: 'Finbarr O\'Brien',
-  copyrightYear: '2017',
+  copyright: {
+    owner: 'Finbarr O\'Brien',
+    year: '2017',
+  },
   locations: [],
 };
 

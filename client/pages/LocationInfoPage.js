@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Panel, Button } from 'react-bootstrap';
 import SPAPage from '../components/SPAPage';
+import MapImage from '../components/MapImage';
 import StarRating from '../components/StarRating';
 import Facility from '../components/Facility';
 import Review from '../components/Review';
@@ -47,6 +49,17 @@ const LocationInfoPage = ({ data, state, onLoad, match }) => {
       break;
   }
   const { name, _id, stars, address, facilities, openingTimes, latLng, reviews } = data;
+  const ReviewPanelHeader = (
+    <div>Customer Reviews
+      <Link
+        to={ { pathname: `/location/${_id}/review/new`,
+          state: {
+            locationId: _id,
+            name,
+          } } }>
+        <Button bsStyle="default pull-right">Add review</Button>
+      </Link>
+    </div>);
   return (
     <SPAPage bannerTitle={ name }>
       <div className="container">
@@ -56,71 +69,49 @@ const LocationInfoPage = ({ data, state, onLoad, match }) => {
               <div className="col-xs-12 col-sm-6">
                 <StarRating stars={ stars } />
                 <p>{ address }</p>
-                <div className="panel panel-primary">
-                  <div className="panel-heading">
-                    <h2 className="panel-title">Opening Hours</h2>
-                  </div>
-                  <div className="panel-body">
-                    {
-                      openingTimes && openingTimes.length ?
-                        openingTimes.map((time, index) => {
-                          return (time.closed ?
-                            <p key={ index }>{ `${time.days}: Closed` }</p> :
-                            <p key={ index }>{ `${time.days}: ${time.open}-${time.close}` }</p>);
-                        }) :
-                        null
-                    }
-                  </div>
-                </div>
-                <div className="panel panel-primary">
-                  <div className="panel-heading">
-                    <h2 className="panel-title">Facilities</h2>
-                  </div>
-                  <div className="panel-body">
-                    {
-                      facilities && facilities.length ?
-                        facilities.map((facility) => {
-                          return (<Facility key={ facility } name={ facility } />);
-                        })
-                        : null
-                    }
-                  </div>
-                </div>
+                <Panel header="Opening Hours" bsStyle="primary">
+                  {
+                    openingTimes && openingTimes.length ?
+                      openingTimes.map((time, index) => {
+                        return (time.closed ?
+                          <p key={ index }>{ `${time.days}: Closed` }</p> :
+                          <p key={ index }>{ `${time.days}: ${time.open}-${time.close}` }</p>);
+                      }) :
+                      null
+                  }
+                </Panel>
+                <Panel header="Facilities" bsStyle="primary">
+                  {
+                    facilities && facilities.length ?
+                      facilities.map((facility) => {
+                        return (<Facility key={ facility } name={ facility } />);
+                      })
+                      : null
+                  }
+                </Panel>
               </div>
               <div className="col-xs-12 col-sm-6 location-map">
-                <div className="panel panel-primary">
-                  <div className="panel-heading">
-                    <h2 className="panel-title">Where To Find Us</h2>
-                  </div>
-                  <div className="panel-body">
-                    <img alt={ `asdfasdfas` }
-                      className="img-responsive img-rounded"
-                      src={ `http://maps.googleapis.com/maps/api/staticmap?key=AIzaSyC0MnlTnNRj8IA7n0vf922f96Js-KMPF5o&center=${latLng[1]},${latLng[0]}&zoom=14&size=400x350&sensor=false&markers=${latLng[1]},${latLng[0]}&scale=2` } />
-                  </div>
-                </div>
+                <Panel header="Where To Find Us" bsStyle="primary">
+                  <MapImage
+                    name={ name }
+                    latitude={ latLng[1] }
+                    longitude={ latLng[0] }
+                    zoom={ 14 }
+                    width={ 400 }
+                    height={ 350 }/>
+                </Panel>
               </div>
             </div>
             <div className="row" >
               <div className="col-xs-12">
-                <div className="panel panel-primary review-panel">
-                  <div className="panel-heading">
-                    <Link className="btn btn-default pull-right" to={{
-                      pathname: `/location/${_id}/review/new`,
-                      state: {
-                        locationId: _id,
-                        name,
-                      }
-                    }}>Add review</Link>
-                    <h2 className="panel-title">Customer reviews</h2>
-                  </div>
-                  <div className="panel-body review-container">
-                    {
-                      reviews.map((review, index) => {
-                        return (<Review key={ index } review={ review } />);
-                      })
-                    }
-                  </div>
-                </div>
+
+                <Panel header={ ReviewPanelHeader } bsStyle="primary">
+                  {
+                    reviews.map((review, index) => {
+                      return (<Review key={ index } review={ review } />);
+                    })
+                  }
+                </Panel>
               </div>
             </div>
           </div>

@@ -5,19 +5,20 @@ import Banner from './Banner';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
-    copyrightHolder: state.copyrightHolder,
-    copyrightYear: state.copyrightYear,
+    owner: state.copyright.owner,
+    year: state.copyright.year,
   };
 };
 
-const Page = ({ bannerTitle, subTitle, copyrightHolder, copyrightYear, children }) =>
+const Page = ({ bannerTitle, subTitle, owner, year, children }) =>
   <div>
     <NavBar />
     <div className="container">
       <Banner title={ bannerTitle } subTitle={ subTitle } />
       { children }
-      <Footer copyrightHolder={copyrightHolder} copyrightYear={copyrightYear} />
+      <Footer copyrightHolder={ owner } copyrightYear={ year } />
     </div>
   </div>
 ;
