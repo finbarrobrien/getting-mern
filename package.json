@@ -41,10 +41,7 @@
     "redux-thunk": "^2.2.0",
     "request": "^2.79.0",
     "scriptjs": "^2.5.8",
-    "serve-favicon": "^2.4.3",
-    "webpack": "^3.5.6",
-    "copy-webpack-plugin": "^4.0.1",
-    "html-webpack-include-assets-plugin": "0.0.7"
+    "serve-favicon": "^2.4.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -60,6 +57,9 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.3.0",
-    "redux-devtools": "^3.3.2"
+    "redux-devtools": "^3.3.2",
+    "webpack": "^3.5.6",
+    "copy-webpack-plugin": "^4.0.1",
+    "html-webpack-include-assets-plugin": "0.0.7"
   }
 }
