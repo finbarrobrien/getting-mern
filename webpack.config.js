@@ -31,8 +31,11 @@ const prod = process.env.NODE_ENV === 'production';
 
 if (prod) {
   plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false,
+    sourceMap: true,
+    uglifyOptions: {
+      compress: {
+        warnings: false,
+      },
     },
   }));
 }
