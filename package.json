@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "run-build": "node app.js",
-    "build": "babel -d ./build ./app_server",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
     "start": "node ./build/app-server.js",
     "fake-data": "babel-node --presets es2015 -- test/data/dataGenerator.js",
     "webpack": "webpack --watch --progress --colors",
