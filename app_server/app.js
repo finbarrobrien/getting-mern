@@ -16,12 +16,12 @@ export { mapKey };
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname)));
 app.use('/api', RestRouter);
 
 // All other routes render index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // catch 404 and forward to error handler
