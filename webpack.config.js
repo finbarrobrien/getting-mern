@@ -80,6 +80,9 @@ const clientBundle = {
 
 const serverBundle = {
   target: 'node',
+  node: {
+    __dirname: false,
+  },
   // Where webpack looks to begin building JS bundles
   entry: {
     app: [ // polyfill functions available throughout our app as it is first here
