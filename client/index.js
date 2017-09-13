@@ -19,4 +19,4 @@ render(
   <Provider store={ store }>
     <Loc8rRouter />
   </Provider>, document.getElementById('app'));
-//registerServiceWorker();
+registerServiceWorker();

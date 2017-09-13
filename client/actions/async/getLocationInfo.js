@@ -5,7 +5,7 @@ const getLocationInfo = (url) => {
   return (dispatch) => {
     console.log(`get data for ${url}`);
     dispatch(setLocationInfoStateAction({ state: 'LOADING' }));
-    return fetch(`http://localhost:3000/api/${url}`, {
+    return fetch(`/api/${url}`, {
       mode: 'no-cors',
     }).then((resp) => {
       console.log(resp);

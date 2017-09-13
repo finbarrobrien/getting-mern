@@ -6,7 +6,7 @@ const apiOptions = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = 'http://pure-castle-77017.herokuapp.com';
+  apiOptions.server = 'https://pure-castle-77017.herokuapp.com';
 }
 
 const _showError = (res, message) => {

@@ -30,7 +30,7 @@ export default class LocationReviewFormPage extends Component {
   postApiData = () => {
     let requestHeaders = new Headers();
     console.log(JSON.stringify(this.review));
-    fetch(`http://localhost:3000/api/location/${this.props.location.state.locationId}/reviews`, {
+    fetch(`/api/location/${this.props.location.state.locationId}/reviews`, {
       mode: 'cors', // of course, since it's coming from the browser...
       method: 'post',
       headers: new Headers({
